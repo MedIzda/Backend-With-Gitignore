@@ -35,3 +35,8 @@ class ParticularAccountSerializer(ModelSerializer):
     class Meta:
         model = Account
         fields = '__all__'
+
+class AppointmentSerializer(ModelSerializer):
+    class Meta:
+        model = Appointment
+        fields = '__all__'

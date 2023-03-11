@@ -13,12 +13,12 @@ class Account(models.Model):
     
 class Location(models.Model):
     city = models.CharField(max_length=20)
-    code = models.CharField(max_length=7)
-    street = models.CharField(max_length=20)
-    houseNo = models.CharField(max_length=2)
-    apartNo = models.CharField(max_length=2)
-    commune = models.CharField(max_length=20)
-    voivodeship = models.CharField(max_length=20)
+    # code = models.CharField(max_length=7)
+    # street = models.CharField(max_length=20)
+    # houseNo = models.CharField(max_length=2)
+    # apartNo = models.CharField(max_length=2)
+    # commune = models.CharField(max_length=20)
+    # voivodeship = models.CharField(max_length=20)
 
     def __str__(self) -> str:
         return "city: " + self.city + " street: " + self.street
@@ -29,7 +29,7 @@ class Clinic(models.Model):
     # NIP = models.CharField(max_length=10)
     # REGON = models.CharField(max_length=9)
     # owner = models.ForeignKey(Account, on_delete=models.CASCADE, verbose_name="Owner")
-    # location = models.ForeignKey(Location, on_delete=models.CASCADE)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
         return "clinic: " + self.name
@@ -52,5 +52,5 @@ class Patient(models.Model):
 class Appointment(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     clinic = models.ForeignKey(Clinic, on_delete=models.CASCADE)
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField()
 
