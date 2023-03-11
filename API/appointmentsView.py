@@ -5,35 +5,42 @@ from .serializers import AppointmentSerializer
 from .models import Appointment, Patient, Clinic
 
 @api_view(['GET'])
-def getClinics(request):
-    clinic = Appointment.objects.all()
-    serializer = AppointmentSerializer(clinic, many=True)
+def getAppointments(request):
+    appointment = Appointment.objects.all()
+    serializer = AppointmentSerializer(appointment, many=True)
 
     return Response(serializer.data)
 
 @api_view(['GET'])
-def getClinic(request, pk):
-    clinic = Appointment.objects.get(id = pk)
-    serializer = AppointmentSerializer(clinic, many=False)
+def getAppointment(request, pk):
+    appointment = Appointment.objects.get(id = pk)
+    serializer = AppointmentSerializer(appointment, many=False)
+
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def getTodays(request, pk):
+    appointment = Appointment.objects.get(date = pk)
+    serializer = AppointmentSerializer(appointment, many=True)
 
     return Response(serializer.data)
 
 @api_view(['POST'])
-def newClinic(request):
+def newAppointment(request):
     data = request.data
-    clinic = Appointment.objects.create(
+    appointment = Appointment.objects.create(
         date = data['date'],
         patient = Patient.objects.get(pesel = data['patient']),
         clinic = Clinic.objects.get(id = data['clinic'])
     )
-    serialzer = AppointmentSerializer(clinic, many=False)
+    serialzer = AppointmentSerializer(appointment, many=False)
     
     return Response(serialzer.data)
 
 @api_view(['PUT'])
-def updateClinic(request, pk):
-    clinic = Appointment.objects.get(id = pk)
-    serialzer = AppointmentSerializer(clinic, data=request.data, partial=True)
+def updateAppointment(request, pk):
+    appointment = Appointment.objects.get(id = pk)
+    serialzer = AppointmentSerializer(appointment, data=request.data, partial=True)
     if serialzer.is_valid():
         serialzer.save()
     else:
@@ -42,8 +49,8 @@ def updateClinic(request, pk):
     return Response(serialzer.data)
 
 @api_view(['DELETE'])
-def removeClinic(request, pk):
-    clinic = Appointment.objects.get(id = pk)
-    clinic.delete()
+def removeAppointment(request, pk):
+    appointment = Appointment.objects.get(id = pk)
+    appointment.delete()
 
     return Response("Clinic was deleted!")
