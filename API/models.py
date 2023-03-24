@@ -21,7 +21,7 @@ class Location(models.Model):
     # voivodeship = models.CharField(max_length=20)
 
     def __str__(self) -> str:
-        return "city: " + self.city + " street: " + self.street
+        return "city: " + self.city# + " street: " + self.street
 
 class Clinic(models.Model):
     name = models.CharField(max_length=30)
